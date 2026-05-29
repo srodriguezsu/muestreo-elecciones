@@ -1,0 +1,177 @@
+---
+title: "Muestreo para Digitalización E-14"
+subtitle: "Planificación de digitalización de formularios en Medellín (Comuna 1 vs. Comuna 14)"
+author: "Mateo Campo - Stiven Saldarriaga - Santiago Vanegas - Sebastián Rodríguez"
+date: "2026-05-29"
+format:
+  revealjs:
+    theme: default
+    transition: fade
+    slide-number: true
+    preview-links: auto
+    width: 1050
+    height: 700
+    margin: 0.05
+    embed-resources: true
+---
+
+## Contexto y Objetivo {background-color="#f8fafc"}
+
+<div style="font-size: 0.85em; margin-top: -15px;">
+Comparación electoral y diseño muestral para la **digitalización de formularios E-14** el próximo domingo.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+<div style="background: white; border-left: 5px solid #2563eb; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-top: 10px; font-size: 0.9em;">
+<span style="display: inline-block; padding: 3px 6px; border-radius: 4px; font-size: 0.85em; font-weight: 600; color: white; background-color: #2563eb; margin-bottom: 8px;">Zona Norte (Comuna 1 - Popular)</span>
+
+* **Características:** Niveles bajos de ingresos y alta densidad de votantes.
+* **Comportamiento:** Mayor abstencionismo histórico y fragmentación del voto.
+</div>
+:::
+
+::: {.column width="50%"}
+<div style="background: white; border-left: 5px solid #10b981; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-top: 10px; font-size: 0.9em;">
+<span style="display: inline-block; padding: 3px 6px; border-radius: 4px; font-size: 0.85em; font-weight: 600; color: white; background-color: #10b981; margin-bottom: 8px;">Zona Sur (Comuna 14 - El Poblado)</span>
+
+* **Características:** Niveles de ingresos altos y menor densidad demográfica.
+* **Comportamiento:** Alta participación y preferencia marcada por partidos tradicionales.
+</div>
+:::
+
+::::
+</div>
+
+## Estrategia de Muestreo {background-color="#f8fafc"}
+
+<div style="font-size: 0.85em; margin-top: -15px;">
+Selección óptima de puestos de votación mediante **criterio de concentración (50%)**.
+
+:::: {.columns}
+
+::: {.column width="55%" style="font-size: 0.95em;"}
+<div style="font-weight: bold; font-size: 1.1em; color: #0f172a; margin-bottom: 8px;">Proceso de Selección</div>
+
+1. **Agregación:** Consolidamos las mesas de votación por puesto físico.
+2. **Ordenamiento:** Clasificamos puestos de mayor a menor volumen de votos.
+3. **Selección:** Elegimos puestos hasta acumular el **50% de los votos** de cada comuna.
+:::
+
+::: {.column width="45%"}
+<div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; margin-top: 5px;">
+<div style="font-weight: bold; color: #0f172a; font-size: 0.95em; margin-bottom: 8px;">🎯 Meta de Digitalización</div>
+<p style="font-size: 0.85em; line-height: 1.4; color: #475569; margin: 0;">
+Optimizar el procesamiento de actas E-14 para el próximo domingo, cubriendo el **50% del censo electoral** con solo **7 puestos estratégicos**.
+</p>
+</div>
+:::
+
+::::
+</div>
+
+## Participación Electoral {background-color="#f8fafc"}
+
+<div style="font-size: 0.85em; margin-top: -15px;">
+Análisis de votos promedio por mesa para planificar la carga de digitalización.
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-height: 3.8
+
+library(tidyverse)
+puestos_path <- if (file.exists("datos/puestos.csv")) "datos/puestos.csv" else "../datos/puestos.csv"
+puestos <- read_csv(puestos_path)
+
+ggplot(puestos, aes(x = Zona, y = prom_votos_mesa, fill = Zona)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = NA, color = "#475569") +
+  geom_jitter(width = 0.12, alpha = 0.8, size = 3.5, aes(color = Zona)) +
+  scale_fill_manual(values = c("NORTE" = "#2563eb", "SUR" = "#10b981")) +
+  scale_color_manual(values = c("NORTE" = "#1d4ed8", "SUR" = "#047857")) +
+  labs(
+    y = "Votos promedio por mesa",
+    x = "Zona"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "#f8fafc", color = NA),
+    panel.background = element_rect(fill = "#f8fafc", color = NA),
+    panel.grid.major = element_line(color = "#e2e8f0"),
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(face = "bold", color = "#475569"),
+    axis.text = element_text(color = "#475569")
+  )
+```
+:::
+
+::: {.column width="40%"}
+<div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; margin-top: 10px;">
+<div style="font-weight: bold; color: #0f172a; font-size: 0.95em; margin-bottom: 8px;">⚡ Implicaciones E-14</div>
+
+* **Zona Sur:** Flujo denso (**>200 votos/mesa**). Formularios con cifras altas y uniformes.
+* **Zona Norte:** Menor densidad (**<100 votos/mesa**). Requiere procesar más mesas para consolidar volumen.
+</div>
+:::
+
+::::
+</div>
+
+
+## Puestos Seleccionados {background-color="#f8fafc"}
+
+<div style="font-size: 0.85em; margin-top: -15px;">
+Los **7 puestos de votación** elegidos que concentran el 50% de la votación de ambas comunas.
+
+<div style="font-size: 0.7em; margin-top: 10px; overflow-x: auto;">
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+muestra_path <- if (file.exists("datos/muestra_puestos.csv")) "datos/muestra_puestos.csv" else "../datos/muestra_puestos.csv"
+muestra <- read_csv(muestra_path)
+
+muestra %>%
+  select(Zona, Nombre.Puesto, num_mesas, suma_votos) %>%
+  knitr::kable(
+    col.names = c("Zona", "Puesto de Votación", "Mesas a Procesar", "Total Votos Históricos"),
+    digits = 0,
+    format = "html"
+  )
+```
+</div>
+
+</div>
+
+## Logística de Digitalización {background-color="#f8fafc"}
+
+<div style="font-size: 0.85em; margin-top: -15px;">
+:::: {.columns}
+
+::: {.column width="50%"}
+<div style="background: white; border-left: 5px solid #2563eb; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.95em;">
+<div style="font-weight: bold; font-size: 1.1em; color: #0f172a; margin-bottom: 8px;">📊 Distribución del Procesamiento</div>
+
+* **En el Sur (Comuna 14):** Procesamiento masivo de datos concentrados. Menos formularios por lote pero con mayor cantidad de registros por mesa.
+* **En el Norte (Comuna 1):** Procesamiento de múltiples formularios más dispersos, con conteos individuales menores por mesa.
+</div>
+:::
+
+::: {.column width="50%"}
+<div style="background: white; border-left: 5px solid #10b981; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.95em;">
+<div style="font-weight: bold; font-size: 1.1em; color: #0f172a; margin-bottom: 8px;">⚡ Beneficio del Muestreo</div>
+
+* **Eficiencia Operativa:** En lugar de recopilar E-14 de todos los puestos de Medellín, nos concentramos en 7 puntos estratégicos.
+* **Representatividad:** Garantía estadística de capturar tendencias globales con una muestra optimizada de la mitad del censo.
+</div>
+:::
+
+::::
+</div>
