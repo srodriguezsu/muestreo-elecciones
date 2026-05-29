@@ -16,13 +16,16 @@ library(tidyverse)
 ```{r}
 mesas <- read_rds("datos/elecc_2023.RDS") %>%
   filter(Nombre.Municipio == "MEDELLIN") %>%
-  mutate(Código.Comuna = Código.Zona) %>%
-  filter(Código.Comuna %in% c(1, 2, 5, 6, 14, 15, 16)) %>%
-  mutate(Zona = case_when(
-    Código.Comuna %in% c(1, 2, 5, 6) ~ "NORTE",
-    Código.Comuna %in% c(14, 15, 16) ~ "SUR"
-  )) %>%
-  group_by(Zona, Código.Comuna)
+  filter(Código.Comuna %in% c(1, 14)) %>%
+  mutate(
+    Votos = Total.Votos
+  ) %>%
+  group_by(
+    Código.Departamento, Nombre.Departamento,
+    Código.Comuna, Nombre.Comuna,
+    Código.Municipio, Nombre.Municipio,
+    Código.Zona, Código.Puesto, Nombre.Puesto, Mesa
+    )
 ```
 
 ```{r}
