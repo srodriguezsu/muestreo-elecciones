@@ -1,1 +1,7 @@
+# Lectura de datos
+
+Lectura de las mesas 
+
+```
 mesas <- read_rds("datos/mesas.RDS")
+```
