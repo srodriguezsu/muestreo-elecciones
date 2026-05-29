@@ -1,0 +1,59 @@
+# Estrategia de muestreo
+
+
+```{r}
+# Limpiar el entorno de trabajo:
+# se eliminan todos los objetos en memoria para asegurar
+# que solo se usen los creados en este script.
+rm(list = ls())
+```
+
+```{r}
+# Cargar tidyverse para tener disponibles las funciones
+# de importación, manipulación y resumen de datos.
+library(tidyverse)
+```
+
+```{r}
+# Medir el tiempo de lectura de la base de datos de mesas
+# previamente guardada en formato RDS.
+mesas <- read_rds("datos/mesas.RDS")
+```
+
+```{r}
+# Agregar la información de las mesas a nivel de puesto.
+# Para cada puesto se calcula:
+# - num_mesas: número de mesas asociadas al puesto.
+# - suma_votos: total de votos sumando todas las mesas del puesto.
+# - prom_votos_mesa: promedio de votos por mesa en el puesto.
+puestos <- mesas |>
+  filter(Nombre.Municipio == "MEDELLIN") %>%
+  mutate(Código.Comuna = Código.Zona) %>%
+  filter(Código.Comuna %in% c(1, 2, 5, 6, 14, 15, 16)) %>%
+  mutate(Zona = case_when(
+    Código.Comuna %in% c(1, 2, 5, 6) ~ "NORTE",
+    Código.Comuna %in% c(14, 15, 16) ~ "SUR"
+  )) %>%
+  group_by(Zona, Código.Comuna, Código.Puesto, Nombre.Puesto) %>%
+  summarise(
+    num_mesas = n(),
+    suma_votos = sum(Votos, na.rm = TRUE),
+    prom_votos_mesa = mean(Votos, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  group_by(Zona) %>%
+  mutate(
+    pct_votos = suma_votos / sum(suma_votos)
+  ) %>%
+  arrange(Zona, desc(pct_votos)) %>%
+  mutate(
+    prop_acum = cumsum(pct_votos)
+  )
+
+# Seleccionar la muestra de puestos a partir de la proporción acumulada.
+# En este caso se toman los puestos que, dentro de cada zona,
+# acumulan hasta el 60% de los votos (criterio de concentración).
+muestra_puestos <- puestos %>%
+  arrange(desc(pct_votos)) %>%
+  filter(prop_acum <= 0.60)
+```
