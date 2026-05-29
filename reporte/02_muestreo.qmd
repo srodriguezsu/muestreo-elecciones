@@ -55,4 +55,13 @@ puestos <- mesas |>
 muestra_puestos <- puestos %>%
   arrange(desc(pct_votos)) %>%
   filter(prop_acum <= 0.50)
+
+# Ordenar y guardar puestos y muestra_puestos como archivos CSV
+puestos %>%
+  arrange(Zona, prop_acum) %>%
+  write_csv("datos/puestos.csv")
+
+muestra_puestos %>%
+  arrange(Zona, num_mesas) %>%
+  write_csv("datos/muestra_puestos.csv")
 ```
