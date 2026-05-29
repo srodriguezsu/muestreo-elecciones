@@ -1,7 +1,32 @@
 # Lectura de datos
 
-Lectura de las mesas 
-
+```{r}
+# Limpiar el entorno de trabajo:
+# se eliminan todos los objetos en memoria para asegurar
+# que solo se usen los creados en este script.
+rm(list = ls())
 ```
-mesas <- read_rds("datos/mesas.RDS")
+
+```{r}
+# Cargar tidyverse para tener disponibles las funciones
+# de importación, manipulación y resumen de datos.
+library(tidyverse)
+```
+
+```{r}
+mesas <- read_rds("datos/mesas.RDS") %>%
+  filter(Nombre.Municipio == "MEDELLIN") %>%
+  mutate(Código.Comuna = Código.Zona) %>%
+  filter(Código.Comuna %in% c(1, 2, 5, 6, 14, 15, 16)) %>%
+  mutate(Zona = case_when(
+    Código.Comuna %in% c(1, 2, 5, 6) ~ "NORTE",
+    Código.Comuna %in% c(14, 15, 16) ~ "SUR"
+  )) %>%
+  group_by(Zona, Código.Comuna)
+```
+
+```{r}
+# Guardar la base de datos de mesas en un archivo RDS para
+# utilizarla en el cálculo del diseño muestral.
+saveRDS(mesas, file = "datos/mesas.RDS")
 ```
