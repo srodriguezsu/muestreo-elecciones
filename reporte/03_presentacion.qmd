@@ -155,21 +155,27 @@ muestra %>%
 <div style="font-size: 0.85em; margin-top: -15px;">
 :::: {.columns}
 
-::: {.column width="50%"}
-<div style="background: white; border-left: 5px solid #2563eb; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.95em;">
-<div style="font-weight: bold; font-size: 1.1em; color: #0f172a; margin-bottom: 8px;">📊 Distribución del Procesamiento</div>
+::: {.column width="55%"}
+<div style="background: white; border-left: 5px solid #2563eb; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.9em;">
+<div style="font-weight: bold; font-size: 1.05em; color: #0f172a; margin-bottom: 8px;">📋 Asignación de Mesas por Integrante</div>
 
-* **En el Sur (Comuna 14):** Procesamiento masivo de datos concentrados. Menos formularios por lote pero con mayor cantidad de registros por mesa.
-* **En el Norte (Comuna 1):** Procesamiento de múltiples formularios más dispersos, con conteos individuales menores por mesa.
+Para procesar las **253 mesas** totales de la muestra de forma equitativa:
+
+* **Mateo Campo:** 63 mesas (34 Norte, 29 Sur)
+* **Stiven Saldarriaga:** 63 mesas (34 Norte, 29 Sur)
+* **Santiago Vanegas:** 63 mesas (34 Norte, 29 Sur)
+* **Sebastián Rodríguez:** 64 mesas (35 Norte, 29 Sur)
 </div>
 :::
 
-::: {.column width="50%"}
-<div style="background: white; border-left: 5px solid #10b981; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.95em;">
-<div style="font-weight: bold; font-size: 1.1em; color: #0f172a; margin-bottom: 8px;">⚡ Beneficio del Muestreo</div>
+::: {.column width="45%"}
+<div style="background: white; border-left: 5px solid #10b981; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.9em;">
+<div style="font-weight: bold; font-size: 1.05em; color: #0f172a; margin-bottom: 8px;">⚡ Resumen Operativo</div>
 
-* **Eficiencia Operativa:** En lugar de recopilar E-14 de todos los puestos de Medellín, nos concentramos en 7 puntos estratégicos.
-* **Representatividad:** Garantía estadística de capturar tendencias globales con una muestra optimizada de la mitad del censo.
+* **Total de Puestos:** 7 puestos estratégicos.
+* **Total de Mesas:** 253 formularios E-14 a procesar.
+* **Meta de Cobertura:** 50% de la representación electoral de ambas comunas.
+* **Carga de Trabajo:** ~63 mesas por integrante.
 </div>
 :::
 
