@@ -28,7 +28,6 @@ mesas <- read_rds("datos/mesas.RDS")
 # - prom_votos_mesa: promedio de votos por mesa en el puesto.
 puestos <- mesas |>
   filter(Nombre.Municipio == "MEDELLIN") %>%
-  mutate(Código.Comuna = Código.Zona) %>%
   filter(Código.Comuna %in% c(1, 14)) %>%
   mutate(Zona = case_when(
     Código.Comuna %in% c(1) ~ "NORTE",
@@ -55,5 +54,5 @@ puestos <- mesas |>
 # acumulan hasta el 60% de los votos (criterio de concentración).
 muestra_puestos <- puestos %>%
   arrange(desc(pct_votos)) %>%
-  filter(prop_acum <= 0.60)
+  filter(prop_acum <= 0.50)
 ```

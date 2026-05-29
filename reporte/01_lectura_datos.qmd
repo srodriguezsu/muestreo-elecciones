@@ -14,18 +14,16 @@ library(tidyverse)
 ```
 
 ```{r}
-mesas <- read_rds("datos/elecc_2023.RDS") %>%
-  filter(Nombre.Municipio == "MEDELLIN") %>%
-  filter(Código.Comuna %in% c(1, 14)) %>%
-  mutate(
-    Votos = Total.Votos
-  ) %>%
-  group_by(
-    Código.Departamento, Nombre.Departamento,
-    Código.Comuna, Nombre.Comuna,
-    Código.Municipio, Nombre.Municipio,
-    Código.Zona, Código.Puesto, Nombre.Puesto, Mesa
-    )
+elecc_2023 <- read_rds("datos/elecc_2023.RDS")
+```
+
+```{r}
+mesas <- elecc_2023 |> 
+    group_by(Código.Departamento, Nombre.Departamento,
+             Código.Comuna, Nombre.Comuna,
+             Código.Municipio, Nombre.Municipio,
+             Código.Zona, Código.Puesto, Nombre.Puesto, Mesa) |> 
+    summarise(Votos = max(Total.Votos))
 ```
 
 ```{r}
